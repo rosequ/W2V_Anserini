@@ -1,0 +1,13 @@
+#raw files#
+###########
+*.cleaned
+
+#w2v models#
+############
+*.bin
+
+#compiled#
+##########
+target/
+*.iml
+*.idea/
