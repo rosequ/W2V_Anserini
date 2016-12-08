@@ -1,10 +1,14 @@
 #raw files#
 ###########
 *.cleaned
-
+*.txt
+queries
+text8
+*.out
 #w2v models#
 ############
 *.bin
+*.model
 
 #compiled#
 ##########

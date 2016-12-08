@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <groupId>ca.uwaterloo.word2vec</groupId>
+    <groupId>anserini.word2vec</groupId>
     <artifactId>word2vec</artifactId>
     <version>0.1</version>
     <modelVersion>4.0.0</modelVersion>
@@ -42,8 +42,13 @@
           <extraJvmArguments>-Xms512M -Xmx24576M</extraJvmArguments>
           <programs>
             <program>
-              <mainClass>ca.uwaterloo.word2vec.TrainW2V</mainClass>
+              <mainClass>anserini.word2vec.train.TrainW2V</mainClass>
               <name>TrainW2V</name>
+            </program>
+
+            <program>
+              <mainClass>anserini.word2vec.search.SearchW2V</mainClass>
+              <name>LoadW2V</name>
             </program>
         
           </programs>
@@ -56,7 +61,7 @@
         <configuration>
           <archive>
             <manifest>
-                <mainClass>ca.uwaterloo.word2vec.TrainW2V</mainClass>
+                <mainClass>fully.qualified.MainClass</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -68,7 +73,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>ca.uwaterloo.word2vec.TrainW2V</mainClass>
+              <mainClass>fully.qualified.MainClass</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>

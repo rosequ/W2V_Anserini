@@ -1,4 +1,4 @@
-package ca.uwaterloo.word2vec;
+package anserini.word2vec.train;
 
 import org.deeplearning4j.models.embeddings.loader.WordVectorSerializer;
 import org.deeplearning4j.models.word2vec.Word2Vec;
@@ -14,15 +14,13 @@ import org.kohsuke.args4j.ParserProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
-
 public class TrainW2V {
 
     private static Logger log = LoggerFactory.getLogger(TrainW2V.class);
 
     public static void main(String[] args) throws Exception {
-        W2vArgs w2vArgs = new W2vArgs();
-        CmdLineParser parser = new CmdLineParser(w2vArgs, ParserProperties.defaults().withUsageWidth(90));
+        TrainArgs trainArgs = new TrainArgs();
+        CmdLineParser parser = new CmdLineParser(trainArgs, ParserProperties.defaults().withUsageWidth(90));
 
         try {
             parser.parseArgument(args);
@@ -36,7 +34,7 @@ public class TrainW2V {
 
         log.info("Load & Vectorize Sentences....");
         // Strip white space before and after for each line
-        SentenceIterator sent_iter = new BasicLineIterator(w2vArgs.raw);
+        SentenceIterator sent_iter = new BasicLineIterator(trainArgs.input);
 
          // Use the Lucene Standard Tokenizer here
         TokenizerFactory t = new DefaultTokenizerFactory();
@@ -44,11 +42,11 @@ public class TrainW2V {
 
         log.info("Building model....");
         Word2Vec vec = new Word2Vec.Builder()
-                .minWordFrequency(w2vArgs.min_word_freq)
-                .iterations(w2vArgs.iter)
-                .layerSize(w2vArgs.layer)
-                .seed(w2vArgs.seed)
-                .windowSize(w2vArgs.window)
+                .minWordFrequency(trainArgs.min_word_freq)
+                .iterations(trainArgs.iter)
+                .layerSize(trainArgs.dimension)
+                .seed(trainArgs.seed)
+                .windowSize(trainArgs.window)
                 .iterate(sent_iter)
                 .tokenizerFactory(t)
                 .build();
@@ -59,10 +57,7 @@ public class TrainW2V {
         log.info("Writing word vectors to text file....");
 
         // Write word vectors
-        WordVectorSerializer.writeWordVectors(vec, "pathToWriteto.txt");
+        WordVectorSerializer.writeWord2Vec(vec, trainArgs.output);
 
-        log.info("Closest Words:");
-        Collection<String> lst = vec.wordsNearest("day", 10);
-        System.out.println(lst);
     }
 }
